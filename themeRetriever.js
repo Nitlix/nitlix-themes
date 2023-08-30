@@ -11,13 +11,11 @@ function themeRetriever(config={}){
         themeHeaderSignal = 'x-theme-signal'
     } = config;
 
-    const returning = {
+    return {
         lastTheme: headers().get(lastThemeHeaderSignal),
         theme: headers().get(themeHeaderSignal),
         config
     }
-
-    return returning;
 }
 
 module.exports = themeRetriever;
