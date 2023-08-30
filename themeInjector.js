@@ -56,14 +56,15 @@ function themeInjector(request, config={}, response=null){
     if (lastTheme) {
         lastTheme = lastTheme.value.toLowerCase();
     }
-    else {
+
+    if (!allowedStyles.includes(lastTheme)) {
         lastTheme = defaultStyle;
         setCookie(lastThemeCookie, defaultStyle);
     }
+    
+    setHeader(lastThemeHeaderSignal, lastTheme);
 
-    if (allowedStyles.includes(lastTheme)) {
-        setHeader(lastThemeHeaderSignal, defaultStyle);
-    }
+
     
     setHeader(themeHeaderSignal, theme);
 
