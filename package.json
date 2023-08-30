@@ -1,0 +1,13 @@
+{
+  "name": "nitlix-themes",
+  "version": "1.0.0",
+  "description": "🌙 A revolutionary new way to handle themes 🚀, using previous renders and cookies.",
+  "main": "exports.js",
+  "keywords": ["themes", "nextjs", "cookies"],
+  "author": "nitlix",
+  "license": "MIT",
+  "dependencies": {
+    "next": "^13.4.19",
+    "react": "^18.2.0"
+  }
+}
