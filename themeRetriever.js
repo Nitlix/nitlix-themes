@@ -1,19 +1,24 @@
-import { cookies } from "next/headers";
+const { headers } = require("next/headers")
 
 /**
- * Retrieves the theme from the cookies.
+ * Retrieves the theme from the headers.
  * @param {*} config Your theme configuration.
  * @returns An object parseable into a theme provider.
  */
-module.exports = function(config={}){
+function themeRetriever(config={}){
     const {
-        lastThemeCookie = 'last-theme',
-        themeCookie = 'theme'
+        lastThemeHeaderSignal = 'x-last-theme',
+        themeHeaderSignal = 'x-theme-signal'
     } = config;
 
-    return {
-        lastTheme: cookies.get(lastThemeCookie).value,
-        theme: cookies.get(themeCookie).value,
+    const returning = {
+        lastTheme: headers().get(lastThemeHeaderSignal),
+        theme: headers().get(themeHeaderSignal),
         config
     }
+    console.log("🚀 ~ file: themeRetriever.js:19 ~ themeRetriever ~ returning:", returning)
+
+    return returning;
 }
+
+module.exports = themeRetriever;

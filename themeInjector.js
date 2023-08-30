@@ -1,4 +1,17 @@
-export default function(request, config={}, response=null){
+const { NextResponse } = require("next/server")
+
+/**
+ * Injects the theme into the request and response.
+ * @param {*} request The request object.
+ * @param {*} config Your theme configuration.
+ * @param {*} response The response object.
+ * @returns The new request, config, and response objects.
+ */
+function themeInjector(request, config={}, response=null){
+    if (!response){
+        response = NextResponse.next()
+    }
+
     const {
         allowedThemes = ['light', 'dark', 'system'],
         defaultTheme = 'system',
@@ -8,10 +21,9 @@ export default function(request, config={}, response=null){
 
         themeCookie = 'theme',
         lastThemeCookie = 'last-theme',
+        
         lastThemeHeaderSignal = 'x-last-theme',
-
-        themeSignalCookie = 'x-theme-signal',
-        themeSignalHeader = 'x-theme-signal',
+        themeHeaderSignal = 'x-theme-signal',
     } = config;
 
     function setCookie(name, value){
@@ -49,11 +61,18 @@ export default function(request, config={}, response=null){
         setCookie(lastThemeCookie, defaultStyle);
     }
 
-    if (!allowedStyles.includes(lastTheme)) {
-        lastTheme = defaultStyle;
+    if (allowedStyles.includes(lastTheme)) {
         setHeader(lastThemeHeaderSignal, defaultStyle);
     }
     
-    setHeader(themeSignalHeader, theme);
-    setCookie(themeSignalCookie, theme);
+    setHeader(themeHeaderSignal, theme);
+
+
+    return {
+        request,
+        config,
+        response
+    }
 }
+
+module.exports = themeInjector;
