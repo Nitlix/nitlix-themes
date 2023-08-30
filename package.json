@@ -1,6 +1,6 @@
 {
   "name": "nitlix-themes",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "🌙 A revolutionary new way to handle themes 🚀, using previous renders and cookies.",
   "main": "exports.js",
   "keywords": [

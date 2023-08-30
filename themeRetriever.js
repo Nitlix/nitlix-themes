@@ -16,7 +16,6 @@ function themeRetriever(config={}){
         theme: headers().get(themeHeaderSignal),
         config
     }
-    console.log("🚀 ~ file: themeRetriever.js:19 ~ themeRetriever ~ returning:", returning)
 
     return returning;
 }
