@@ -1,8 +1,8 @@
 {
   "name": "nitlix-themes",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "🌙 A revolutionary new way to handle themes 🚀, using previous renders and cookies.",
-  "main": "exports.js",
+  "main": "./dist/exports.js",
   "keywords": [
     "themes",
     "nextjs",

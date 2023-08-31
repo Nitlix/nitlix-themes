@@ -1,14 +1,16 @@
-const { headers } = require("next/headers")
+import { headers } from "next/headers"
+import { Config, ThemeRetrieverResult } from "./types";
+import settings from "./settings";
 
 /**
  * Retrieves the theme from the headers.
  * @param {*} config Your theme configuration.
  * @returns An object parseable into a theme provider.
  */
-function themeRetriever(config={}){
+export default function(config: Config = {}): ThemeRetrieverResult{
     const {
-        lastThemeHeaderSignal = 'x-last-theme',
-        themeHeaderSignal = 'x-theme-signal'
+        lastThemeHeaderSignal = settings.lastThemeHeaderSignal,
+        themeHeaderSignal = settings.themeHeaderSignal,
     } = config;
 
     return {
@@ -17,5 +19,3 @@ function themeRetriever(config={}){
         config
     }
 }
-
-module.exports = themeRetriever;

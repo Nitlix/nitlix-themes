@@ -1,4 +1,6 @@
-const { NextResponse } = require("next/server")
+import { NextRequest, NextResponse } from "next/server";
+import { Config, ThemeInjectorResult } from "./types";
+import settings from "./settings";
 
 /**
  * Injects the theme into the request and response.
@@ -7,7 +9,12 @@ const { NextResponse } = require("next/server")
  * @param {*} response The response object.
  * @returns The new request, config, and response objects.
  */
-function themeInjector(request, config={}, response=null){
+export default function(
+    request: NextRequest, 
+    config: Config={},
+    response: NextResponse = NextResponse.next()
+): ThemeInjectorResult {
+
     if (!response){
         response = NextResponse.next()
     }
@@ -22,18 +29,20 @@ function themeInjector(request, config={}, response=null){
         themeCookie = 'theme',
         lastThemeCookie = 'last-theme',
         
-        lastThemeHeaderSignal = 'x-last-theme',
-        themeHeaderSignal = 'x-theme-signal',
+        lastThemeHeaderSignal = settings.lastThemeHeaderSignal,
+        themeHeaderSignal = settings.themeHeaderSignal,
     } = config;
 
-    function setCookie(name, value){
+    function setCookie(name: string, value: string){
         request.cookies.set(name, value);
         response.cookies.set(name, value);
     }
 
-    const getCookie = (name) => request.cookies.get(name);
+    function getCookie(name: string): {value: string} | undefined{
+        return request.cookies.get(name);
+    }
 
-    function setHeader(name, value){
+    function setHeader(name: string, value: string){
         response.headers.set(name, value);
         request.headers.set(name, value);
     }
@@ -42,7 +51,7 @@ function themeInjector(request, config={}, response=null){
     //====================
     // Theme setting
     //====================
-    let theme = getCookie(themeCookie);
+    let theme: any = getCookie(themeCookie);
     if (theme) {
         theme = theme.value.toLowerCase();
     }
@@ -52,7 +61,7 @@ function themeInjector(request, config={}, response=null){
         setCookie(themeCookie, defaultTheme);
     }
 
-    let lastTheme = getCookie(lastThemeCookie);
+    let lastTheme: any = getCookie(lastThemeCookie);
     if (lastTheme) {
         lastTheme = lastTheme.value.toLowerCase();
     }
@@ -71,9 +80,6 @@ function themeInjector(request, config={}, response=null){
 
     return {
         request,
-        config,
         response
     }
 }
-
-module.exports = themeInjector;
