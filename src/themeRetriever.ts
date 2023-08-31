@@ -14,8 +14,8 @@ export default function(config: Config = {}): ThemeRetrieverResult{
     } = config;
 
     return {
-        lastTheme: headers().get(lastThemeHeaderSignal),
-        theme: headers().get(themeHeaderSignal),
+        lastTheme: headers().get(lastThemeHeaderSignal) || settings.defaultStyle,
+        theme: headers().get(themeHeaderSignal) || settings.defaultTheme,
         config
     }
 }

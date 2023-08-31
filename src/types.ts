@@ -20,7 +20,7 @@ export type ThemeInjectorResult = {
 }
 
 export type ThemeRetrieverResult = {
-    lastTheme: string | null,
-    theme: string | null,
+    lastTheme: string,
+    theme: string,
     config: Config
 }

@@ -21,10 +21,10 @@ export default function(
 
     const {
         allowedThemes = ['light', 'dark', 'system'],
-        defaultTheme = 'system',
+        defaultTheme = settings.defaultTheme,
 
         allowedStyles = ['light', 'dark'],
-        defaultStyle = 'dark',
+        defaultStyle = settings.defaultTheme,
 
         themeCookie = 'theme',
         lastThemeCookie = 'last-theme',
