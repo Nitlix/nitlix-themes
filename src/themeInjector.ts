@@ -9,44 +9,42 @@ import settings from "./settings";
  * @param {*} response The response object.
  * @returns The new request, config, and response objects.
  */
-export default function(
-    request: NextRequest, 
-    config: Config={},
+export default function (
+    request: NextRequest,
+    config: Config = {},
     response: NextResponse = NextResponse.next()
 ): ThemeInjectorResult {
-
-    if (!response){
-        response = NextResponse.next()
+    if (!response) {
+        response = NextResponse.next();
     }
 
     const {
-        allowedThemes = ['light', 'dark', 'system'],
+        allowedThemes = ["light", "dark", "system"],
         defaultTheme = settings.defaultTheme,
 
-        allowedStyles = ['light', 'dark'],
+        allowedStyles = ["light", "dark"],
         defaultStyle = settings.defaultTheme,
 
-        themeCookie = 'theme',
-        lastThemeCookie = 'last-theme',
-        
+        themeCookie = "theme",
+        lastThemeCookie = "last-theme",
+
         lastThemeHeaderSignal = settings.lastThemeHeaderSignal,
         themeHeaderSignal = settings.themeHeaderSignal,
     } = config;
 
-    function setCookie(name: string, value: string){
+    function setCookie(name: string, value: string) {
         request.cookies.set(name, value);
         response.cookies.set(name, value);
     }
 
-    function getCookie(name: string): {value: string} | undefined{
+    function getCookie(name: string): { value: string } | undefined {
         return request.cookies.get(name);
     }
 
-    function setHeader(name: string, value: string){
+    function setHeader(name: string, value: string) {
         response.headers.set(name, value);
         request.headers.set(name, value);
     }
-
 
     //====================
     // Theme setting
@@ -70,16 +68,13 @@ export default function(
         lastTheme = defaultStyle;
         setCookie(lastThemeCookie, defaultStyle);
     }
-    
+
     setHeader(lastThemeHeaderSignal, lastTheme);
 
-
-    
     setHeader(themeHeaderSignal, theme);
-
 
     return {
         request,
-        response
-    }
+        response,
+    };
 }
