@@ -25,8 +25,8 @@ export default function (
         response.cookies.set(name, value);
     }
 
-    function getCookie(name: string): { value: string } | undefined {
-        return request.cookies.get(name);
+    function getCookie(name: string): string {
+        return request.cookies.get(name)?.value || "";
     }
 
     //====================

@@ -1,7 +1,21 @@
 import themeInjector from "./themeInjector";
 import themeRetriever from "./themeRetriever";
-import type { Config, ThemeInjectorResult, ThemeRetrieverResult } from "./types";
+import configParser from "./configParser";
+import type {
+    Config,
+    Style,
+    Theme,
+    ThemeInjectorResult,
+    ThemeRetrieverResult,
+} from "./types";
 
-
-
-export { themeInjector, themeRetriever, Config, ThemeInjectorResult, ThemeRetrieverResult };
+export {
+    themeInjector,
+    themeRetriever,
+    configParser,
+    Config,
+    Style,
+    Theme,
+    ThemeInjectorResult,
+    ThemeRetrieverResult,
+};
