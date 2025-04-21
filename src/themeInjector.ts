@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Config, ThemeInjectorResult } from "./types";
-import settings from "./settings";
+import configParser from "./configParser";
 
 /**
  * Injects the theme into the request and response.
@@ -18,19 +18,7 @@ export default function (
         response = NextResponse.next();
     }
 
-    const {
-        allowedThemes = ["light", "dark", "system"],
-        defaultTheme = settings.defaultTheme,
-
-        allowedStyles = ["light", "dark"],
-        defaultStyle = settings.defaultTheme,
-
-        themeCookie = "theme",
-        lastThemeCookie = "last-theme",
-
-        lastThemeHeaderSignal = settings.lastThemeHeaderSignal,
-        themeHeaderSignal = settings.themeHeaderSignal,
-    } = config;
+    const conf = configParser(config);
 
     function setCookie(name: string, value: string) {
         request.cookies.set(name, value);
@@ -41,37 +29,22 @@ export default function (
         return request.cookies.get(name);
     }
 
-    function setHeader(name: string, value: string) {
-        response.headers.set(name, value);
-        request.headers.set(name, value);
-    }
-
     //====================
     // Theme setting
     //====================
-    let theme: any = getCookie(themeCookie);
-    if (theme) {
-        theme = theme.value.toLowerCase();
+    let theme: any = getCookie(conf.themeCookie);
+
+    if (!conf.allowedThemes.includes(theme)) {
+        theme = conf.defaultTheme;
+        setCookie(conf.themeCookie, conf.defaultTheme);
     }
 
-    if (!allowedThemes.includes(theme)) {
-        theme = defaultTheme;
-        setCookie(themeCookie, defaultTheme);
+    let lastStyle: any = getCookie(conf.lastStyleCookie);
+
+    if (!conf.allowedStyles.includes(lastStyle)) {
+        lastStyle = conf.defaultStyle;
+        setCookie(conf.lastStyleCookie, conf.defaultStyle);
     }
-
-    let lastTheme: any = getCookie(lastThemeCookie);
-    if (lastTheme) {
-        lastTheme = lastTheme.value.toLowerCase();
-    }
-
-    if (!allowedStyles.includes(lastTheme)) {
-        lastTheme = defaultStyle;
-        setCookie(lastThemeCookie, defaultStyle);
-    }
-
-    setHeader(lastThemeHeaderSignal, lastTheme);
-
-    setHeader(themeHeaderSignal, theme);
 
     return {
         request,

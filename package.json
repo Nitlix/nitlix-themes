@@ -1,6 +1,6 @@
 {
     "name": "nitlix-themes",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "🌙 A revolutionary new way to handle themes 🚀, using previous renders and cookies.",
     "main": "./dist/exports.js",
     "keywords": [
@@ -11,6 +11,13 @@
     "author": "nitlix",
     "license": "MIT",
     "devDependencies": {
+        "@types/node": "^22.14.1",
         "next": "^15.0.3"
+    },
+    "dependencies": {
+        "@types/react": "^19.1.2",
+        "@types/react-dom": "^19.1.2",
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0"
     }
 }

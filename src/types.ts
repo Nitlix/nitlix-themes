@@ -1,17 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export type Config = {
-    allowedThemes?: string[];
-    defaultTheme?: string;
+export type Style = "light" | "dark";
+export type Theme = Style | "system";
 
-    allowedStyles?: string[];
-    defaultStyle?: string;
+export type Config = {
+    allowedThemes?: Theme[];
+    defaultTheme?: Theme;
+
+    allowedStyles?: Style[];
+    defaultStyle?: Style;
 
     themeCookie?: string;
-    lastThemeCookie?: string;
+    lastStyleCookie?: string;
+};
 
-    lastThemeHeaderSignal?: string;
-    themeHeaderSignal?: string;
+export type StrictConfig = {
+    allowedThemes: Theme[];
+    defaultTheme: Theme;
+
+    allowedStyles: Style[];
+    defaultStyle: Style;
+
+    themeCookie: string;
+    lastStyleCookie: string;
 };
 
 export type ThemeInjectorResult = {
@@ -20,7 +31,7 @@ export type ThemeInjectorResult = {
 };
 
 export type ThemeRetrieverResult = {
-    lastTheme: string;
-    theme: string;
+    lastStyle: Style;
+    theme: Theme;
     config: Config;
 };
